@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory
+		android:title="Time Settings">
+		<ListPreference android:title="Time Format"
+			android:key="timeformat" android:defaultValue="24hr"
+			android:entries="@array/timeFormatEntries"
+			android:entryValues="@array/timeFormatValues" />
+
+	</PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Input/Output"
+            >
+
+        <EditTextPreference
+                android:title="SD Card Input/Output Location"
+                android:key="external_storage_loc"
+                android:defaultValue="EZ_time_tracker"
+                android:dialogTitle="SD Card Location" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="Display"
+            >
+
+        <CheckBoxPreference
+                android:title="Report Line Separators"
+                android:key="show_report_separator"
+                android:defaultValue="false"
+                android:dialogTitle="Report Line Separators" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
