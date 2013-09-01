@@ -1,12 +1,15 @@
 package com.zetterbaum.timetracker.model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.zetterbaum.timetracker.R;
+import com.zetterbaum.timetracker.Settings;
 import com.zetterbaum.timetracker.database.TimeSliceCategoryDBAdapter;
 
 import java.util.List;
@@ -33,7 +36,7 @@ public class TimeSliceCategoryAdapter extends ArrayAdapter<TimeSliceCategory> {
 		TimeSliceCategoryDBAdapter timeSliceCategoryDBAdapter = new TimeSliceCategoryDBAdapter(context);
 
 		List<TimeSliceCategory> categories = timeSliceCategoryDBAdapter
-				.fetchAllTimeSliceCategories();
+				.fetchAllTimeSliceCategories(Settings.getPunchOrder(context));
 		return new TimeSliceCategoryAdapter(context,
 				viewId, categories, withDescription);
 
@@ -51,6 +54,8 @@ public class TimeSliceCategoryAdapter extends ArrayAdapter<TimeSliceCategory> {
 		if (category != null) {
 			TextView tt = (TextView) view
 					.findViewById(R.id.category_list_view_name_field);
+            int fontSize = Settings.getPunchDialogFontSize(context);
+            tt.setTextSize(fontSize);
 			TextView bt = (TextView) view
 					.findViewById(R.id.category_list_view_description_field);
 			if(withDescription) {

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	public static final String TIME_SLICE_CATEGORY_TABLE = "time_slice_category";
 	public static final String TIME_SLICE_TABLE = "time_slice";
 
@@ -22,6 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE " + TIME_SLICE_TABLE + " (_id integer primary key autoincrement, "
 						+ "category_id integer, start_time date, end_time date)");
 		version3Upgrade(db);
+        version4Upgrade(db);
 	}
 
 	@Override
@@ -33,10 +34,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if (oldVersion < 3) {
 			version3Upgrade(db);
 		}
+        if (oldVersion < 4) {
+            version4Upgrade(db);
+        }
 	}
 
 	private void version3Upgrade(final SQLiteDatabase db) {
 		db.execSQL("ALTER TABLE " + TIME_SLICE_TABLE + " ADD COLUMN notes TEXT");
 	}
+
+    private void version4Upgrade(final SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + TIME_SLICE_CATEGORY_TABLE + " ADD COLUMN usage_count INTEGER");
+    }
 
 }

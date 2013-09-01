@@ -21,7 +21,7 @@
 
     </PreferenceCategory>
     <PreferenceCategory
-            android:title="Display"
+            android:title="Reports"
             >
 
         <CheckBoxPreference
@@ -29,7 +29,20 @@
                 android:key="show_report_separator"
                 android:defaultValue="false"
                 android:dialogTitle="Report Line Separators" />
-
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="Punch-in Dialog"
+            >
+        <EditTextPreference
+                android:title="Dialog Font Size"
+                android:key="punch_font"
+                android:numeric="integer"
+                android:defaultValue="20"
+                android:dialogTitle="Punch Dialog Font Size" />
+        <ListPreference android:title="Sort By"
+                        android:key="punch_sort_by" android:defaultValue="category_name"
+                        android:entries="@array/punchSortByEntries"
+                        android:entryValues="@array/punchSortByValues" />
     </PreferenceCategory>
 
 </PreferenceScreen>

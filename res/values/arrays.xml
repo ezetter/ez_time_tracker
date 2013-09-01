@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string-array name="timeFormatEntries">
-<item>AM/PM</item>
-<item>24 Hour</item>
-</string-array>
-<string-array name="timeFormatValues">
-<item>ampm</item>
-<item>24hr</item>
-</string-array> 
+    <string-array name="timeFormatEntries">
+        <item>AM/PM</item>
+        <item>24 Hour</item>
+    </string-array>
+    <string-array name="timeFormatValues">
+        <item>ampm</item>
+        <item>24hr</item>
+    </string-array>
+    <string-array name="punchSortByEntries">
+        <item>Category Name</item>
+        <item>Most Frequent First</item>
+    </string-array>
+    <string-array name="punchSortByValues">
+        <item>category_name</item>
+        <item>usage_count desc, category_name asc</item>
+    </string-array>
 </resources>

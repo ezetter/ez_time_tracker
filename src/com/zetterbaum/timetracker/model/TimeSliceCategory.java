@@ -2,6 +2,7 @@ package com.zetterbaum.timetracker.model;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
+import com.zetterbaum.timetracker.Settings;
 import com.zetterbaum.timetracker.database.TimeSliceCategoryDBAdapter;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ public class TimeSliceCategory implements Serializable, Comparable<TimeSliceCate
 
 	private String description;
 
+    private long usageCount = 0;
 
 	public long getRowId() {
 		return rowId;
@@ -46,7 +48,19 @@ public class TimeSliceCategory implements Serializable, Comparable<TimeSliceCate
 		this.description = description;
 	}
 
-	@Override
+    public long getUsageCount() {
+        return usageCount;
+    }
+
+    public void setUsageCount(long usageCount) {
+        this.usageCount = usageCount;
+    }
+
+    public void incUsageCount() {
+        ++this.usageCount;
+    }
+
+    @Override
 	public String toString() {
 		return categoryName;
 	}
@@ -81,7 +95,7 @@ public class TimeSliceCategory implements Serializable, Comparable<TimeSliceCate
 		TimeSliceCategoryDBAdapter timeSliceCategoryDBAdapter = new TimeSliceCategoryDBAdapter(context);
 
 		TimeSliceCategory[] timeSliceCategories = timeSliceCategoryDBAdapter
-				.fetchAllTimeSliceCategories()
+				.fetchAllTimeSliceCategories(Settings.getPunchOrder(context))
 				.toArray(new TimeSliceCategory[0]);
 		return new ArrayAdapter<TimeSliceCategory>(
 				context, android.R.layout.simple_spinner_item, timeSliceCategories);

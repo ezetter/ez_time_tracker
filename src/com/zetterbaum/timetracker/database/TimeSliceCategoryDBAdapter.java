@@ -25,6 +25,7 @@ public class TimeSliceCategoryDBAdapter {
 		ContentValues values = new ContentValues();
 		values.put("category_name", category.getCategoryName());
 		values.put("description", category.getDescription());
+        values.put("usage_count", category.getUsageCount());
 
 		return values;
 	}
@@ -49,21 +50,22 @@ public class TimeSliceCategoryDBAdapter {
 		columns.add("_id");
 		columns.add("category_name");
 		columns.add("description");
+        columns.add("usage_count");
 		return columns.toArray(new String[0]);
 	}
 
-	public List<TimeSliceCategory> fetchAllTimeSliceCategories() {
+	public List<TimeSliceCategory> fetchAllTimeSliceCategories(String orderBy) {
 		List<TimeSliceCategory> result = new ArrayList<TimeSliceCategory>();
 		Cursor cur = DatabaseInstance.getDb().query(
 				DatabaseHelper.TIME_SLICE_CATEGORY_TABLE, columnList(), null,
-				null, null, null, "category_name");
+				null, null, null, orderBy);
 		while (cur.moveToNext()) {
 			TimeSliceCategory cat = fillTimeSliceCategoryFromCursor(cur);
 			result.add(cat);
 		}
 		if (result.size() == 0) {
 			initialize();
-			result = fetchAllTimeSliceCategories();
+			result = fetchAllTimeSliceCategories(orderBy);
 		}
 		return result;
 	}
@@ -74,6 +76,7 @@ public class TimeSliceCategoryDBAdapter {
 			cat.setRowId(cur.getInt(cur.getColumnIndexOrThrow("_id")));
 			cat.setCategoryName(cur.getString(cur.getColumnIndex("category_name")));
 			cat.setDescription(cur.getString(cur.getColumnIndex("description")));
+            cat.setUsageCount(cur.getLong(cur.getColumnIndex("usage_count")));
 		}
 		return cat;
 	}

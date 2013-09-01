@@ -16,6 +16,7 @@ import android.widget.*;
 import android.widget.Chronometer.OnChronometerTickListener;
 import com.zetterbaum.timetracker.*;
 import com.zetterbaum.timetracker.database.DatabaseInstance;
+import com.zetterbaum.timetracker.database.TimeSliceCategoryDBAdapter;
 import com.zetterbaum.timetracker.database.TimeSliceDBAdapter;
 import com.zetterbaum.timetracker.model.TimeSliceCategory;
 
@@ -46,6 +47,7 @@ public class MainActivity extends Activity {
 	private Chronometer chronometer;
 	private TimeTrackerData sessionData = new TimeTrackerData();
 	private TimeSliceDBAdapter timeSliceDBAdapter;
+    private final TimeSliceCategoryDBAdapter timeSliceCategoryDBAdapter = new TimeSliceCategoryDBAdapter(this);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -214,6 +216,8 @@ public class MainActivity extends Activity {
 			sessionData.setPunchInBase(chronometer.getBase());
 			updateTimeSpentDoingLabel();
 			getNotesEditText().setText("");
+            selectedCategory.incUsageCount();
+            timeSliceCategoryDBAdapter.update(selectedCategory);
 			saveState();
 		}
 		((TextView) findViewById(R.id.mainViewChronOutput)).setTextColor(Color.GREEN);
